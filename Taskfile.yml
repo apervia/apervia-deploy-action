@@ -1,0 +1,41 @@
+version: "3"
+
+tasks:
+  default:
+    desc: List available tasks
+    cmds:
+      - task --list
+    silent: true
+
+  install:
+    desc: Install the dependencies
+    cmds:
+      - npm ci
+
+  build:
+    desc: Compile to lib/ and bundle to dist/ (commit dist/)
+    cmds:
+      - npm run build
+
+  test:
+    desc: Run the test suite
+    cmds:
+      - npm test
+
+  lint:
+    desc: Check formatting and lint
+    cmds:
+      - npm run format-check
+      - npm run lint
+
+  all:
+    desc: Build, check formatting, lint and test
+    cmds:
+      - npm run all
+
+  release:
+    desc: Publish the package.json version (N.0.0) as GitHub Release vN
+    interactive: true
+    cmds:
+      - node scripts/release.ts
+    silent: true

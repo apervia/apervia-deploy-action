@@ -1,0 +1,16 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Apervia mark: navy squircle, teal connected-node hub. -->
+  <rect width="512" height="512" rx="112" fill="#142448"/>
+  <g stroke="#12BDC5" stroke-width="20" stroke-linecap="round">
+    <line x1="256" y1="256" x2="256" y2="132"/>
+    <line x1="256" y1="256" x2="150" y2="372"/>
+    <line x1="256" y1="256" x2="362" y2="372"/>
+  </g>
+  <g fill="#12BDC5">
+    <circle cx="256" cy="132" r="28"/>
+    <circle cx="150" cy="372" r="28"/>
+    <circle cx="362" cy="372" r="28"/>
+    <circle cx="256" cy="256" r="46"/>
+  </g>
+  <circle cx="256" cy="256" r="19" fill="#142448"/>
+</svg>

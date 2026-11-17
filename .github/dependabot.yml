@@ -1,0 +1,30 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      development:
+        dependency-type: development
+        # The toolchain caps TypeScript: @typescript-eslint accepts below 6.1
+        # and ts-jest accepts below 7. Inside the group, a TypeScript update
+        # above the cap would hold back every other update in the pull request.
+        exclude-patterns:
+          - typescript
+    ignore:
+      # TypeScript 7 fails the toolchain cap above. Remove this once both
+      # @typescript-eslint and ts-jest accept it.
+      - dependency-name: typescript
+        update-types:
+          - version-update:semver-major
+      # The Node types must match the major the action runs, which is node24 in
+      # action.yml. Types above the runtime accept calls to methods that are
+      # not there, and the type check is the only thing that reads them.
+      - dependency-name: '@types/node'
+        update-types:
+          - version-update:semver-major
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

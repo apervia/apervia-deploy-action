@@ -1,0 +1,49 @@
+{
+  "name": "apervia-deploy-action",
+  "version": "4.0.0",
+  "description": "Deploy a built container image digest to an Apervia environment from GitHub Actions",
+  "type": "module",
+  "main": "lib/main.js",
+  "scripts": {
+    "build": "tsc && ncc build src/main.ts -o dist --license licenses.txt",
+    "format": "prettier --write '**/*.ts'",
+    "format-check": "prettier --check '**/*.ts'",
+    "lint": "eslint src/**/*.ts scripts/**/*.ts",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "all": "npm run build && npm run format-check && npm run lint && npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apervia/apervia-deploy-action.git"
+  },
+  "keywords": [
+    "github",
+    "actions",
+    "apervia",
+    "deploy"
+  ],
+  "author": "Apervia",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "@actions/core": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.19.2",
+    "@typescript-eslint/eslint-plugin": "^8.72.1",
+    "@typescript-eslint/parser": "^8.70.1",
+    "@vercel/ncc": "^0.45.0",
+    "eslint": "^10.14.0",
+    "jest": "^30.5.1",
+    "prettier": "^3.9.10",
+    "ts-jest": "^29.4.15",
+    "typescript": "~6.0"
+  },
+  "overrides": {
+    "minimatch": "^11.0.1",
+    "glob": "^14.0.2"
+  }
+}

@@ -1,0 +1,74 @@
+name: 'Apervia Deploy'
+description: 'Deploy a container image digest to an Apervia environment'
+author: 'Apervia'
+
+branding:
+  icon: 'upload-cloud'
+  color: 'blue'
+
+inputs:
+  target:
+    description: >
+      The environment to deploy into, as the Apervia console shows it, for
+      example env_abcdefghijklmnopqrst. It never changes, so a change to the
+      application's address does not break the workflow.
+    required: false
+  application:
+    description: >
+      The Apervia application slug, for a workflow written before target.
+      Use target instead: a slug changes when somebody changes the
+      application's address.
+    required: false
+  environment:
+    description: 'The Apervia environment slug, with application. Use target instead.'
+    required: false
+  image:
+    description: >
+      The image to deploy, as a repository and an exact digest, for example
+      ghcr.io/acme/widget@sha256:<64 hex characters>.
+
+
+      The action does not build or push the image. Your workflow builds and
+      pushes it first, and passes the digest that the push returned. A tag is
+      refused, because a tag can move after you write it.
+    required: true
+  platform-url:
+    description: >
+      The deployment origin of your Apervia installation. Leave it unset for
+      production.
+
+
+      For another installation, use the origin in the workflow that its
+      console generates.
+      Give the origin only. A path, a query string, a fragment or credentials
+      in the URL are refused.
+    required: false
+    default: 'https://deploy.apervia.ai'
+  poll-interval:
+    description: 'Seconds between status polls while the release becomes ready. Between 1 and 60.'
+    required: false
+    default: '5'
+  timeout:
+    description: 'Seconds to wait for the release to become ready. Between 30 and 3600.'
+    required: false
+    default: '600'
+  auto-deploy:
+    description: >
+      Whether the new version goes live at once. Set it to false to hold it
+      until a person releases it in the Apervia console. The job then ends
+      with the state waiting, and does not fail. The first deploy into an
+      environment is never held.
+    required: false
+    default: 'true'
+
+outputs:
+  release:
+    description: 'The release number the deployment created.'
+  digest:
+    description: 'The image digest that was deployed.'
+  state:
+    description: 'The final state of the release: ready, failed, superseded or waiting.'
+
+runs:
+  using: node24
+  main: dist/index.js

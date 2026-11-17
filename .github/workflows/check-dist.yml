@@ -1,0 +1,33 @@
+# The action runs dist/index.js, not the TypeScript source. A reviewer reads the
+# source, so the bundle must be the source. This job rebuilds and fails if the
+# committed bundle differs.
+name: Check dist
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  check-dist:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Compare the rebuilt bundle with the committed one
+        run: |
+          if [ -n "$(git status --porcelain dist/)" ]; then
+            echo "The committed dist/ does not match the source. Run 'npm run build' and commit the result."
+            git diff --stat dist/
+            exit 1
+          fi
